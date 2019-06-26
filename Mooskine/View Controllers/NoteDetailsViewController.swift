@@ -14,6 +14,8 @@ class NoteDetailsViewController: UIViewController {
 
     /// The note being displayed and edited
     var note: Note!
+    
+    var dataController : DataController!
 
     /// A closure that is run when the user asks to delete the current note
     var onDelete: (() -> Void)?
@@ -29,8 +31,8 @@ class NoteDetailsViewController: UIViewController {
         super.viewDidLoad()
         if let creationDate = note.creationDate {
             navigationItem.title = dateFormatter.string(from: creationDate)
-            textView.text = note.text
         }
+        textView.text = note.text
     }
 
     @IBAction func deleteNote(sender: Any) {
@@ -60,5 +62,6 @@ extension NoteDetailsViewController {
 extension NoteDetailsViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         note.text = textView.text
+        dataController.save()
     }
 }
